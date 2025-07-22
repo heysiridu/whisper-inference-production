@@ -1,0 +1,59 @@
+service: "service:WhisperX"
+name: "whisperx-production"
+version: "1.2.0"
+
+labels:
+  owner: "production-ready"
+  project: "audio-transcription"
+  framework: "whisperx"
+  compatible: "mac-cloud"
+
+include:
+  - "service.py"
+  - "requirements.txt"
+  - "README.md"
+  - "female.wav"
+
+exclude:
+  - "test*.py"
+  - "tests/"
+  - "examples/"
+  - "scripts/"
+  - "docs/"
+  - "__pycache__/"
+  - "*.pyc"
+  - ".git/"
+  - "*.log"
+
+python:
+  requirements_txt: "./requirements.txt"
+  lock_packages: true
+  python_version: "3.11"
+
+docker:
+  base_image: "nvidia/cuda:11.8-devel-ubuntu22.04"
+  system_packages:
+    - ffmpeg
+    - git
+    - libsndfile1-dev
+    - sox
+    - curl
+    - wget
+    - build-essential
+
+envs:
+  - name: HF_TOKEN
+    value: "{{ HF_TOKEN }}"
+  - name: CUDA_VISIBLE_DEVICES
+    value: "0"
+  - name: TORCH_HOME
+    value: "/tmp/torch"
+  - name: HF_HOME
+    value: "/tmp/huggingface"
+  - name: TRANSFORMERS_CACHE
+    value: "/tmp/transformers"
+  # 兼容性设置
+  - name: PYTORCH_CUDA_ALLOC_CONF
+    value: "max_split_size_mb:128"
+  - name: CUDA_LAUNCH_BLOCKING
+    value: "1"
