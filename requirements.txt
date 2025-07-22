@@ -1,0 +1,19 @@
+# 兼容性修复版本
+torch==2.1.2
+torchaudio==2.1.2
+transformers==4.35.2
+
+# WhisperX 相关
+whisperx==3.1.1
+faster-whisper==0.10.1
+
+# pyannote 兼容版本
+pyannote.audio==3.1.1
+pyannote.core==5.0.0
+
+# 音频处理
+librosa==0.10.1
+soundfile==0.12.1
+
+# BentoML
+bentoml>=1.2.0
